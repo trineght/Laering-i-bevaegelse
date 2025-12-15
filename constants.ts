@@ -42,7 +42,7 @@ export const EDUCATIONS = [
 ];
 
 export const SEMESTERS = [
-    "1. semester",
+    "1. semester1",
     "2. semester",
     "3. semester",
     "4. semester",
