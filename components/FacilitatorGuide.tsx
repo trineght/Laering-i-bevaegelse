@@ -11,9 +11,9 @@ const FacilitatorGuide: React.FC = () => {
         <Card className="!p-0 overflow-hidden">
             <div className="flex flex-col">
                 <div className="p-6 sm:p-8 border-b border-gray-200 bg-gray-50">
-                    <h2 className="text-2xl font-bold text-[#464646]">Guide til facilitator</h2>
-                    <p className="text-[#464646] mt-2">
-                        Her finder du teoretisk baggrund, mødeagendaer og kvikrunden til at facilitere Roll & Reflect.
+                    <h2 className="text-4xl font-bold text-[#464646]">Guide til facilitator</h2>
+                    <p className="text-[#464646] mt-4 text-2xl">
+                        Her finder du teoretisk baggrund, mødeagendaer og kvikrunden til at facilitere Læring i bevægelse - et eksperiment i didaktisk mod.
                     </p>
                 </div>
 
@@ -22,9 +22,9 @@ const FacilitatorGuide: React.FC = () => {
                         <button
                             key={item.tab}
                             onClick={() => setActiveTab(index)}
-                            className={`py-4 px-6 text-sm font-bold transition-colors whitespace-nowrap ${
+                            className={`py-5 px-8 text-xl font-bold transition-colors whitespace-nowrap ${
                                 activeTab === index 
-                                ? 'border-b-2 border-[#1F7A75] text-[#1F7A75] bg-[#E0F2F1]' 
+                                ? 'border-b-4 border-[#1F7A75] text-[#1F7A75] bg-[#E0F2F1]' 
                                 : 'text-gray-500 hover:text-[#464646] hover:bg-gray-50'
                             }`}
                             role="tab"
@@ -36,8 +36,8 @@ const FacilitatorGuide: React.FC = () => {
                 </div>
 
                 <div className="p-6 sm:p-8">
-                    <div className="prose max-w-none prose-gray text-[#464646]">
-                        <h3 className="text-xl font-bold text-[#1F7A75] mb-4">{activeContent.title}</h3>
+                    <div className="prose max-w-none prose-gray text-[#464646] prose-2xl">
+                        <h3 className="text-5xl font-bold text-[#1F7A75] mb-10">{activeContent.title}</h3>
                         {activeContent.content}
                     </div>
                 </div>

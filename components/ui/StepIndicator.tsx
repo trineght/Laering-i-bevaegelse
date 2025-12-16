@@ -6,7 +6,7 @@ interface StepIndicatorProps {
 
 const steps = [
     { number: 1, title: 'Start-evaluering' },
-    { number: 2, title: 'Roll & Reflect' },
+    { number: 2, title: 'Læring i bevægelse - et eksperiment i didaktisk mod' },
     { number: 3, title: 'Slut-evaluering' },
 ];
 

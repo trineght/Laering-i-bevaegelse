@@ -165,73 +165,81 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
         <Card>
             <h2 className="text-2xl font-bold text-[#464646] mb-4">Lad eksperimentet begynde!</h2>
             
-            <p className="text-[#1F7A75] mb-4 font-medium">Step 1: Vælg tid og start</p>
+            <p className="text-[#1F7A75] mb-4 font-bold text-xl">Step 1: Vælg tid og start</p>
 
             {/* Countdown Timer Section */}
-            <div className="mb-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="flex flex-col items-center sm:items-start w-full sm:w-auto">
-                        <label htmlFor="timer-input" className="block text-sm font-bold text-gray-700 mb-1">
-                            Nedtælling (min)
-                        </label>
-                        <div className="flex items-center gap-2">
-                             <input
-                                type="number"
-                                id="timer-input"
-                                value={timerInput}
-                                onChange={handleTimerInputChange}
-                                min="1"
-                                max="60"
-                                disabled={isTimerRunning}
-                                className="w-20 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] sm:text-sm bg-white text-[#464646] text-center"
-                            />
-                            <span className="text-sm text-gray-500">(max 60)</span>
-                        </div>
+            <div className="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center">
+                
+                {/* Timer Display/Input Container */}
+                <div className="relative mb-2">
+                    <div className="flex items-center justify-center text-5xl sm:text-6xl font-mono font-bold text-[#1F7A75] tracking-widest bg-white px-12 py-6 rounded-xl border border-gray-200 shadow-inner min-w-[300px]">
+                        {!hasTimerStarted ? (
+                            <div className="flex items-center justify-center">
+                                <input
+                                    type="number"
+                                    value={timerInput}
+                                    onChange={handleTimerInputChange}
+                                    min="1"
+                                    max="60"
+                                    className="w-[3ch] text-center bg-transparent border-none focus:ring-0 p-0 text-[#1F7A75] placeholder-[#1F7A75]/50 outline-none appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                    placeholder="10"
+                                    aria-label="Sæt minutter"
+                                />
+                                <span>:00</span>
+                            </div>
+                        ) : (
+                            <span>{formatTime(timeLeft)}</span>
+                        )}
                     </div>
+                </div>
 
-                    <div className="text-4xl sm:text-5xl font-mono font-bold text-[#1F7A75] tracking-widest bg-white px-4 py-2 rounded border border-gray-200 shadow-inner min-w-[160px] text-center">
-                        {formatTime(timeLeft)}
-                    </div>
+                {/* Helper text for max time - only shown when editing */}
+                {!hasTimerStarted ? (
+                     <p className="text-sm text-gray-400 font-medium mb-6 uppercase tracking-wider">(max 60 min)</p>
+                ) : (
+                    // Spacer to keep layout relatively stable or just margin
+                    <div className="mb-6"></div>
+                )}
 
-                    <div className="flex gap-2 w-full sm:w-auto justify-center">
-                         <button
-                            onClick={toggleTimer}
-                            disabled={timeLeft === 0 && !isTimerRunning}
-                            className={`px-4 py-2 rounded-md text-white font-semibold transition-colors flex items-center justify-center min-w-[80px] ${
-                                isTimerRunning 
-                                    ? 'bg-yellow-500 hover:bg-yellow-600' 
-                                    : 'bg-[#1F7A75] hover:bg-[#165955] disabled:bg-gray-300'
-                            }`}
-                        >
-                            {isTimerRunning ? 'Pause' : 'Start'}
-                        </button>
-                        <button
-                            onClick={resetTimer}
-                            className="px-4 py-2 rounded-md bg-white border border-gray-300 text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
-                        >
-                            Nulstil
-                        </button>
-                    </div>
+                {/* Control Buttons */}
+                <div className="flex gap-4">
+                     <button
+                        onClick={toggleTimer}
+                        disabled={timeLeft === 0 && !isTimerRunning}
+                        className={`px-8 py-3 rounded-full text-white font-bold text-lg transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 min-w-[120px] flex justify-center items-center ${
+                            isTimerRunning 
+                                ? 'bg-yellow-500 hover:bg-yellow-600' 
+                                : 'bg-[#1F7A75] hover:bg-[#165955] disabled:bg-gray-300 disabled:shadow-none disabled:transform-none disabled:cursor-not-allowed'
+                        }`}
+                    >
+                        {isTimerRunning ? 'Pause' : 'Start'}
+                    </button>
+                    <button
+                        onClick={resetTimer}
+                        className="px-8 py-3 rounded-full bg-white border-2 border-gray-200 text-gray-600 font-bold text-lg hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 transition-all shadow-sm hover:shadow-md"
+                    >
+                        Nulstil
+                    </button>
                 </div>
             </div>
 
             {/* Step 2 Section */}
             {hasTimerStarted && (
                 <div className="animate-fade-in">
-                    <p className="text-[#1F7A75] mb-4 font-medium">Step 2: Udfyld felterne</p>
+                    <p className="text-[#1F7A75] mb-4 font-bold text-xl">Step 2: Udfyld felterne</p>
 
                     {/* Education Selection Dropdown and Details */}
                     <div className="mb-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             <div>
-                                <label htmlFor="education-select" className="block text-sm font-bold text-gray-700 mb-2">
+                                <label htmlFor="education-select" className="block text-lg font-bold text-gray-700 mb-2">
                                     Professionshøjskole- og erhvervsakademi
                                 </label>
                                 <select
                                     id="education-select"
                                     value={selectedEducation}
                                     onChange={(e) => onEducationChange(e.target.value)}
-                                    className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] sm:text-sm rounded-md bg-white border shadow-sm text-[#464646]"
+                                    className="block w-full pl-3 pr-10 py-3 text-lg border-gray-300 focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] rounded-md bg-white border shadow-sm text-[#464646]"
                                 >
                                     <option value="" disabled>Vælg uddannelse...</option>
                                     {EDUCATIONS.map((edu) => (
@@ -243,14 +251,14 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
                             </div>
 
                             <div>
-                                <label htmlFor="semester-select" className="block text-sm font-bold text-gray-700 mb-2">
+                                <label htmlFor="semester-select" className="block text-lg font-bold text-gray-700 mb-2">
                                     Semester
                                 </label>
                                 <select
                                     id="semester-select"
                                     value={selectedSemester}
                                     onChange={(e) => onSemesterChange(e.target.value)}
-                                    className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] sm:text-sm rounded-md bg-white border shadow-sm text-[#464646]"
+                                    className="block w-full pl-3 pr-10 py-3 text-lg border-gray-300 focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] rounded-md bg-white border shadow-sm text-[#464646]"
                                 >
                                     <option value="" disabled>Vælg semester...</option>
                                     {SEMESTERS.map((sem) => (
@@ -262,8 +270,8 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
                             </div>
                         </div>
 
-                        <div className="mt-4">
-                            <label htmlFor="keywords" className="block text-sm font-bold text-gray-700 mb-2">
+                        <div className="mt-6">
+                            <label htmlFor="keywords" className="block text-lg font-bold text-gray-700 mb-2">
                                 Nøgleord / Tema (valgfri)
                             </label>
                             <input
@@ -272,13 +280,13 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
                                 value={keywords}
                                 onChange={(e) => onKeywordsChange(e.target.value)}
                                 placeholder="Fx anatomi, konfliktløsning eller bæredygtighed"
-                                className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] sm:text-sm bg-white text-[#464646]"
+                                className="block w-full px-3 py-3 text-lg border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] bg-white text-[#464646]"
                             />
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
                             <div>
-                                <label htmlFor="duration" className="block text-sm font-bold text-gray-700 mb-2">
+                                <label htmlFor="duration" className="block text-lg font-bold text-gray-700 mb-2">
                                     Varighed (min)
                                 </label>
                                 <input
@@ -287,11 +295,11 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
                                     value={duration}
                                     onChange={(e) => onDurationChange(e.target.value)}
                                     placeholder="Fx 45"
-                                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] sm:text-sm bg-white text-[#464646]"
+                                    className="block w-full px-3 py-3 text-lg border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] bg-white text-[#464646]"
                                 />
                             </div>
                             <div>
-                                <label htmlFor="groupSize" className="block text-sm font-bold text-gray-700 mb-2">
+                                <label htmlFor="groupSize" className="block text-lg font-bold text-gray-700 mb-2">
                                     Antal studerende
                                 </label>
                                 <input
@@ -300,12 +308,12 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
                                     value={groupSize}
                                     onChange={(e) => onGroupSizeChange(e.target.value)}
                                     placeholder="Fx 25"
-                                    className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] sm:text-sm bg-white text-[#464646]"
+                                    className="block w-full px-3 py-3 text-lg border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] bg-white text-[#464646]"
                                 />
                             </div>
                         </div>
 
-                        <p className="text-xs text-gray-500 mt-4">
+                        <p className="text-base text-gray-500 mt-6">
                             Når du vælger en uddannelse og angiver rammerne, genereres scenarier med udgangspunkt i den pågældende studieordning.
                         </p>
                     </div>
@@ -315,7 +323,7 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
             {/* Step 3 Section */}
             {hasTimerStarted && isStep2Complete && (
                 <div className="animate-fade-in">
-                    <p className="text-[#1F7A75] mb-4 font-medium">Step 3: Slå med terningerne</p>
+                    <p className="text-[#1F7A75] mb-4 font-bold text-xl">Step 3: Slå med terningerne</p>
 
                     {!result && (
                         <p className="text-[#464646] mb-6">Slå med terningerne for at få en kombination af en didaktisk metode, en digital teknologi og en analog teknologi til dit næste undervisningsforløb.</p>
