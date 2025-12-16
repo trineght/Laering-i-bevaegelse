@@ -22,7 +22,7 @@ const FacilitatorGuide: React.FC = () => {
                         <button
                             key={item.tab}
                             onClick={() => setActiveTab(index)}
-                            className={`py-5 px-8 text-xl font-bold transition-colors whitespace-nowrap ${
+                            className={`py-3 px-4 text-base font-bold transition-colors whitespace-nowrap ${
                                 activeTab === index 
                                 ? 'border-b-4 border-[#1F7A75] text-[#1F7A75] bg-[#E0F2F1]' 
                                 : 'text-gray-500 hover:text-[#464646] hover:bg-gray-50'
