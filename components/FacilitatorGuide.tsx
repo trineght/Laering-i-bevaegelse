@@ -17,15 +17,16 @@ const FacilitatorGuide: React.FC = () => {
                     </p>
                 </div>
 
-                <div className="flex border-b border-gray-200 overflow-x-auto bg-white">
+                {/* Updated Navigation Bar - More distinct tabs */}
+                <div className="flex overflow-x-auto bg-gray-100 p-3 gap-3 border-b border-gray-200 scrollbar-hide">
                     {FACILITATOR_CONTENT.map((item, index) => (
                         <button
                             key={item.tab}
                             onClick={() => setActiveTab(index)}
-                            className={`py-3 px-4 text-base font-bold transition-colors whitespace-nowrap ${
+                            className={`py-3 px-6 text-lg font-bold transition-all whitespace-nowrap rounded-lg flex-shrink-0 ${
                                 activeTab === index 
-                                ? 'border-b-4 border-[#1F7A75] text-[#1F7A75] bg-[#E0F2F1]' 
-                                : 'text-gray-500 hover:text-[#464646] hover:bg-gray-50'
+                                ? 'bg-[#1F7A75] text-white shadow-md' 
+                                : 'bg-white text-gray-600 hover:text-[#1F7A75] hover:shadow-md border border-gray-200'
                             }`}
                             role="tab"
                             aria-selected={activeTab === index}
@@ -45,6 +46,15 @@ const FacilitatorGuide: React.FC = () => {
              <style>{`
                 .prose ul.list-circle {
                     list-style-type: circle;
+                }
+                /* Hide scrollbar for Chrome, Safari and Opera */
+                .scrollbar-hide::-webkit-scrollbar {
+                    display: none;
+                }
+                /* Hide scrollbar for IE, Edge and Firefox */
+                .scrollbar-hide {
+                    -ms-overflow-style: none;  /* IE and Edge */
+                    scrollbar-width: none;  /* Firefox */
                 }
             `}</style>
         </Card>

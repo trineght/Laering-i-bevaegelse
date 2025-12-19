@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { DieItem, DiceResult, DiceCategory } from '../types';
-import { EDUCATIONS, SEMESTERS } from '../constants';
+import { EDUCATIONS, SEMESTERS, TEACHING_MODES } from '../constants';
 import Card from './ui/Card';
 import Dice from './ui/Dice';
 
@@ -18,6 +18,8 @@ interface DiceRollerProps {
     onGroupSizeChange: (size: string) => void;
     keywords: string;
     onKeywordsChange: (keywords: string) => void;
+    teachingMode: string;
+    onTeachingModeChange: (mode: string) => void;
 }
 
 const ResultCard: React.FC<{ 
@@ -61,7 +63,9 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
     groupSize,
     onGroupSizeChange,
     keywords,
-    onKeywordsChange
+    onKeywordsChange,
+    teachingMode,
+    onTeachingModeChange
 }) => {
     const [rollingCategory, setRollingCategory] = useState<DiceCategory | 'all' | null>(null);
     const [showResults, setShowResults] = useState(false);
@@ -159,7 +163,7 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
     };
 
     // Check if required fields in Step 2 are filled
-    const isStep2Complete = selectedEducation && selectedSemester && duration && groupSize;
+    const isStep2Complete = selectedEducation && selectedSemester && duration && groupSize && teachingMode;
 
     return (
         <Card>
@@ -270,18 +274,38 @@ const DiceRoller: React.FC<DiceRollerProps> = ({
                             </div>
                         </div>
 
-                        <div className="mt-6">
-                            <label htmlFor="keywords" className="block text-lg font-bold text-gray-700 mb-2">
-                                Nøgleord / Tema (valgfri)
-                            </label>
-                            <input
-                                type="text"
-                                id="keywords"
-                                value={keywords}
-                                onChange={(e) => onKeywordsChange(e.target.value)}
-                                placeholder="Fx anatomi, konfliktløsning eller bæredygtighed"
-                                className="block w-full px-3 py-3 text-lg border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] bg-white text-[#464646]"
-                            />
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+                            <div>
+                                <label htmlFor="keywords" className="block text-lg font-bold text-gray-700 mb-2">
+                                    Nøgleord / Tema (valgfri)
+                                </label>
+                                <input
+                                    type="text"
+                                    id="keywords"
+                                    value={keywords}
+                                    onChange={(e) => onKeywordsChange(e.target.value)}
+                                    placeholder="Fx anatomi, konfliktløsning eller bæredygtighed"
+                                    className="block w-full px-3 py-3 text-lg border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] bg-white text-[#464646]"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="teachingMode" className="block text-lg font-bold text-gray-700 mb-2">
+                                    Undervisningsform
+                                </label>
+                                <select
+                                    id="teachingMode"
+                                    value={teachingMode}
+                                    onChange={(e) => onTeachingModeChange(e.target.value)}
+                                    className="block w-full pl-3 pr-10 py-3 text-lg border-gray-300 focus:outline-none focus:ring-[#1F7A75] focus:border-[#1F7A75] rounded-md bg-white border shadow-sm text-[#464646]"
+                                >
+                                    <option value="" disabled>Vælg form...</option>
+                                    {TEACHING_MODES.map((mode) => (
+                                        <option key={mode} value={mode}>
+                                            {mode}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">

@@ -51,6 +51,13 @@ export const SEMESTERS = [
     "7. semester"
 ];
 
+export const TEACHING_MODES = [
+    "Fysisk",
+    "Online",
+    "Blended",
+    "Hybrid"
+];
+
 export const DICE_DATA: { didactic: DieItem[], digital: DieItem[], analog: DieItem[] } = {
     didactic: [
         { emoji: "💬", title: "Casebaseret læring", description: "Underviseren tager udgangspunkt i realistiske cases fra praksis for at skabe refleksion og dialog.", example: "En sygeplejecase fra hospitalet bruges som afsæt for gruppearbejde og diskussion." },

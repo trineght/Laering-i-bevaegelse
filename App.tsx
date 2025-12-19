@@ -20,6 +20,7 @@ function App() {
   const [duration, setDuration] = useState<string>('');
   const [groupSize, setGroupSize] = useState<string>('');
   const [keywords, setKeywords] = useState<string>('');
+  const [teachingMode, setTeachingMode] = useState<string>('');
   
   // Brainstorming State
   const [userNotes, setUserNotes] = useState<string>('');
@@ -64,7 +65,7 @@ function App() {
     if (showAiScenario) {
         setShowAiScenario(false);
     }
-  }, [selectedEducation, selectedSemester, duration, groupSize, keywords]);
+  }, [selectedEducation, selectedSemester, duration, groupSize, keywords, teachingMode]);
 
   const handleReset = () => {
     if (window.confirm("Er du sikker på, at du vil starte forfra? Alle indtastninger vil gå tabt.")) {
@@ -75,6 +76,7 @@ function App() {
         setDuration('');
         setGroupSize('');
         setKeywords('');
+        setTeachingMode('');
         setUserNotes('');
         setShowAiScenario(false);
         setScenario(null);
@@ -104,6 +106,7 @@ function App() {
             : "for en videregående uddannelse (professionsbachelor eller erhvervsakademi).";
 
         const logisticsContext = [
+            teachingMode ? `Undervisningsform: ${teachingMode}.` : null,
             duration ? `Varighed: ${duration} minutter.` : null,
             groupSize ? `Holdstørrelse: ${groupSize} studerende.` : null
         ].filter(Boolean).join(' ');
@@ -268,6 +271,8 @@ function App() {
                 onGroupSizeChange={setGroupSize}
                 keywords={keywords}
                 onKeywordsChange={setKeywords}
+                teachingMode={teachingMode}
+                onTeachingModeChange={setTeachingMode}
               />
               
               {diceResult && (
